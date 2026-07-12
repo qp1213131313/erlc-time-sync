@@ -16,7 +16,7 @@
 //                    largo y aleatorio) para que nadie más pueda
 //                    llamar a este endpoint y cambiarte la hora.
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // --- 1. Autenticación simple con un secreto compartido ---
   const secretoRecibido = req.headers["x-sync-secret"] || req.query.secret;
   const secretoEsperado = process.env.SYNC_SECRET;
