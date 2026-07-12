@@ -1,0 +1,23 @@
+name: Sincronizar hora ER:LC (Madrid)
+
+on:
+  # GitHub Actions no deja programar workflows más frecuentes que
+  # cada 5 minutos (es un límite duro de la plataforma; expresiones
+  # más frecuentes se aceptan pero nunca se ejecutan). Además, avisa
+  # de que puede haber retrasos de 5-30 min en horas de mucha carga,
+  # así que tampoco tiene sentido pedir más precisión de la que puede
+  # garantizar.
+  schedule:
+    - cron: "*/5 * * * *"
+  # Permite lanzarlo a mano desde la pestaña "Actions" de GitHub para
+  # probarlo sin esperar al cron.
+  workflow_dispatch: {}
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Llamar al endpoint de sincronización en Vercel
+        run: |
+          curl --fail --silent --show-error \
+            "https://TU-PROYECTO.vercel.app/api/sync-time?secret=${{ secrets.SYNC_SECRET }}"
